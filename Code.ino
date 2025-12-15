@@ -16,7 +16,7 @@ QueueHandle_t irQueue;
 #include <PZEM004Tv30.h>
 #include <time.h>
 
-HardwareSerial mySerial(2); // UART2
+HardwareSerial mySerial(2);
 PZEM004Tv30 pzem(mySerial, 4, 16); // RX, TX
 
 #define WIFI_SSID "xuong TD"
@@ -36,14 +36,14 @@ FirebaseConfig config;
 #define DHT_PIN 18
 #define DHT_TYPE DHT22
 
-#define BUTTON_ON       23  // Nút bật
-#define BUTTON_OFF      14  // Nút tắt
-#define BUTTON_DEFAULT  26  // Nút reset
+#define BUTTON_ON       23  
+#define BUTTON_OFF      14  
+#define BUTTON_DEFAULT  26  
 
-#define RELAY4_PIN 17 // PS
-#define RELAY2_PIN 32 // ĐÈN VÀNG
-#define RELAY3_PIN 25 // ĐÈN XANH
-#define RELAY1_PIN 33 // ĐÈN ĐỎ
+#define RELAY4_PIN 17 
+#define RELAY2_PIN 32 
+#define RELAY3_PIN 25 
+#define RELAY1_PIN 33 
 
 uint16_t raw_2A46B51B[] =   {4450, 4450, 500, 1600, 500, 600, 500, 1600, 500, 1600, 500, 600, 500, 600, 500, 1600, 500, 600, 500, 550, 500, 1650, 500, 550, 500, 600, 500, 1600, 500, 1650, 500, 550, 500, 1650, 500, 600, 500, 1600, 500, 1600, 500, 1600, 500, 1650, 500, 550, 500, 1650, 550, 1550, 500, 1600, 550, 550, 550, 550, 500, 550, 550, 550, 550, 1600, 500, 550, 550, 550, 500, 1600, 550, 1600, 500, 1600, 500, 600, 500, 550, 550, 550, 500, 600, 550, 500, 550, 550, 500, 600, 500, 550, 550, 1600, 500, 1600, 500, 1600, 550, 1600, 550, 1550, 550, 5650, 4450, 4400, 550, 1600, 550, 500, 550, 1600, 500, 1600, 550, 550, 500, 600, 500, 1600, 500, 600, 500, 550, 550, 1600, 550, 500, 550, 550, 500, 1600, 550, 1600, 550, 500, 550, 1600, 500, 550, 550, 1600, 500, 1600, 500, 1600, 550, 1600, 500, 550, 550, 1600, 500, 1600, 500, 1600, 550, 550, 550, 550, 500, 550, 550, 550, 500, 1600, 550, 550, 500, 600, 500, 1600, 500, 1600, 550, 1600, 500, 550, 550, 550, 550, 550, 500, 550, 550, 550, 550, 550, 500, 600, 500, 550, 550, 1550, 550, 1600, 500, 1600, 550, 1550, 550, 1600, 500};
 uint16_t raw_84D3A633[] = {4550, 4400, 600, 1550, 600, 500, 600, 1550, 550, 1550, 600, 500, 600, 500, 600, 1550, 600, 500, 550, 550, 550, 1550, 600, 500, 600, 500, 600, 1550, 600, 1550, 550, 500, 600, 1550, 500, 1650, 600, 500, 550, 1550, 600, 1550, 600, 1550, 600, 1550, 550, 1550, 600, 1550, 600, 500, 600, 1550, 550, 550, 550, 500, 600, 500, 600, 500, 600, 500, 600, 500, 500, 600, 500, 600, 500, 1600, 600, 500, 600, 500, 600, 500, 600, 500, 500, 600, 600, 1550, 550, 1550, 600, 500, 600, 1550, 600, 1550, 550, 1550, 600, 1550, 600, 1550, 550, 5700, 4450, 4500, 550, 1600, 500, 600, 500, 1600, 550, 1600, 550, 550, 550, 550, 500, 1650, 550, 500, 550, 550, 500, 1650, 550, 550, 500, 600, 500, 1650, 500, 1600, 500, 600, 500, 1650, 500, 1650, 500, 550, 500, 1650, 500, 1650, 500, 1650, 500, 1600, 500, 1650, 550, 1600, 500, 600, 500, 1600, 550, 550, 500, 600, 500, 600, 550, 550, 500, 600, 500, 600, 500, 550, 500, 600, 500, 1650, 550, 550, 500, 600, 500, 600, 500, 600, 500, 600, 500, 1600, 550, 1600, 500, 600, 500, 1600, 550, 1600, 550, 1600, 500, 1650, 500, 1600, 550};
@@ -71,12 +71,12 @@ float tempDS, tempDHT, humidDHT;
 
 void initTime() {
   configTime(7 * 3600, 0, "1.vn.pool.ntp.org", "time.nist.gov", "time.windows.com");  // GMT+7
-  Serial.print("⏳ Đồng bộ thời gian...");
+  Serial.print("Đồng bộ thời gian...");
   while (time(nullptr) < 100000) {
     Serial.print(".");
     delay(500);
   }
-  Serial.println("✅ Đã có thời gian thực!");
+  Serial.println("Xác nhận thời gian thực!");
 }
 
 void connectWiFi() {
@@ -115,7 +115,7 @@ void taskSendFirebase(void* pvParameters) {
 
       Serial.println("Đã gửi dữ liệu Firebase");
     }
-    vTaskDelay(pdMS_TO_TICKS(10000));  // Mỗi 5 giây
+    vTaskDelay(pdMS_TO_TICKS(10000)); 
   }
 }
 
@@ -147,7 +147,6 @@ void taskSendFirebase(void* pvParameters) {
 //            digitalWrite(RELAY3_PIN, LOW);
 //          }
 //
-//          // Xoá lệnh sau khi xử lý
 //          Firebase.RTDB.deleteNode(&fbdo, "/command");
 //        }
 //      }
@@ -174,21 +173,21 @@ void doccb() {
   humidDHT = dht.readHumidity();
   Serial.printf("Nhiệt độ DS18B20: %.2f°C\n", tempDS);
   Serial.printf("Nhiệt độ DHT22: %.2f°C | Độ ẩm: %.2f%%\n", tempDHT, humidDHT);
-//  if (!isRelay4On && humidDHT < 54) {
-//    digitalWrite(RELAY4_PIN, HIGH);
-//    isRelay4On = true;
-//    Serial.println("⚡ BẬT relay vì độ ẩm thấp");
-//  } else if (isRelay4On && humidDHT > 60) {
-//    digitalWrite(RELAY4_PIN, LOW);
-//    isRelay4On = false;
-//    Serial.println("🛑 TẮT relay vì độ ẩm cao");
-//  }
+ if (!isRelay4On && humidDHT < 54) {
+   digitalWrite(RELAY4_PIN, HIGH);
+   isRelay4On = true;
+   Serial.println("BẬT relay vì độ ẩm thấp");
+ } else if (isRelay4On && humidDHT > 60) {
+   digitalWrite(RELAY4_PIN, LOW);
+   isRelay4On = false;
+   Serial.println("TẮT relay vì độ ẩm cao");
+ }
 }
 
 void taskDocCamBien(void* pvParameters) {
   for (;;) {
     doccb();
-    vTaskDelay(pdMS_TO_TICKS(2000)); // Đọc mỗi 2 giây
+    vTaskDelay(pdMS_TO_TICKS(2000));
   }
 }
 
@@ -200,7 +199,6 @@ void nutnhan() {
 
   // Nút RESET
   if (lastOnState == HIGH && currOn == LOW && now - lastDebounceTime > debounceDelay) {
-    Serial.println("Nút RESET được nhấn");
     digitalWrite(RELAY2_PIN, HIGH);  // ĐÈN VÀNG
     digitalWrite(RELAY3_PIN, LOW);
     digitalWrite(RELAY1_PIN, LOW);
@@ -210,7 +208,6 @@ void nutnhan() {
 
   // Nút TẮT
   if (lastOffState == HIGH && currOff == LOW && now - lastDebounceTime > debounceDelay) {
-    Serial.println("Nút TẮT được nhấn");
     IRCommand irCmd = { raw_2A46B51B, 199, "BẬT" };
     xQueueSend(irQueue, &irCmd, portMAX_DELAY);
     digitalWrite(RELAY1_PIN, HIGH);  // ĐÈN ĐỎ
@@ -222,7 +219,6 @@ void nutnhan() {
 
   // Nút BẬT
   if (lastDefaultState == HIGH && currDefault == LOW && now - lastDebounceTime > debounceDelay) {
-    Serial.println("Nút BẬT được nhấn");
     IRCommand irCmd = { raw_84D3A633, 199, "TẮT" };
     xQueueSend(irQueue, &irCmd, portMAX_DELAY);
     digitalWrite(RELAY3_PIN, HIGH);  // ĐÈN XANH
@@ -262,10 +258,10 @@ void taskDocPZEM(void *pvParameters) {
     pf = pzem.pf();
 
     if (isnan(voltage) || isnan(current) || isnan(power) || isnan(energy) || isnan(frequency) || isnan(pf)) {
-      Serial.println("⚠️ Không đọc được dữ liệu từ PZEM.");
+      Serial.println("Không đọc được dữ liệu từ PZEM.");
     } else {
-      Serial.printf("🔌 U: %.2f V | ⚡ I: %.2f A | 💡 P: %.2f W\n", voltage, current, power);
-      Serial.printf("🔋 Năng lượng: %.2f Wh | 🎵 F: %.2f Hz | PF: %.2f\n", energy, frequency, pf);
+      Serial.printf("U: %.2f V | I: %.2f A | P: %.2f W\n", voltage, current, power);
+      Serial.printf("Công suất: %.2f Wh | Tần số: %.2f Hz | Hệ số cosphi: %.2f\n", energy, frequency, pf);
     }
 
     vTaskDelay(pdMS_TO_TICKS(5000));  // Đọc mỗi 5 giây
@@ -275,14 +271,13 @@ void taskDocPZEM(void *pvParameters) {
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Bắt đầu hệ thống điều khiển bằng nút nhấn + IR");
 
   irQueue = xQueueCreate(5, sizeof(IRCommand));
 
   IrSender.begin(IR_LED_PIN, ENABLE_LED_FEEDBACK, false);
   dht.begin();
-  lcd.init();         // Khởi tạo LCD
-  lcd.backlight();    // Bật đèn nền (nếu có)
+  lcd.init();        
+  lcd.backlight();    
   ds18b20.begin();
   
   pinMode(BUTTON_ON, INPUT);
@@ -300,23 +295,23 @@ void setup() {
   config.database_url = DATABASE_URL;
 
   if (Firebase.signUp(&config, &auth, "", "")) {
-    Serial.println("✅ Đăng nhập Firebase thành công");
+    Serial.println("Đăng nhập Firebase thành công");
     Firebase.begin(&config, &auth);
     Firebase.reconnectWiFi(true);
   } else {
-    Serial.printf("❌ Lỗi Firebase: %s\n", config.signer.signupError.message.c_str());
+    Serial.printf("Lỗi Firebase: %s\n", config.signer.signupError.message.c_str());
   }
   
   digitalWrite(RELAY1_PIN, LOW);
   digitalWrite(RELAY2_PIN, LOW);
   digitalWrite(RELAY3_PIN, LOW);
   digitalWrite(RELAY4_PIN, LOW);
-  xTaskCreatePinnedToCore(taskDocCamBien, "Doc_Cam_Bien", 4096, NULL, 1, NULL, 1); // Core 1
+  xTaskCreatePinnedToCore(taskDocCamBien, "Doc_Cam_Bien", 4096, NULL, 1, NULL, 1);
   xTaskCreatePinnedToCore(taskLCD, "LCD_Task", 4096, NULL, 1, NULL, 1);
   xTaskCreatePinnedToCore(taskSendFirebase, "SendFirebase", 8192, NULL, 3, NULL, 0);  
-//  xTaskCreatePinnedToCore(taskNhanLenhRTDB, "NhanLenhRTDB", 4096, NULL, 2, NULL, 1); 
-  xTaskCreatePinnedToCore(taskIRSender, "IR_Sender", 4096, NULL, 2, NULL, 1); // Core 1
-  xTaskCreatePinnedToCore(taskDocPZEM, "Doc_PZEM", 4096, NULL, 1, NULL, 1); // Core 1
+  xTaskCreatePinnedToCore(taskNhanLenhRTDB, "NhanLenhRTDB", 4096, NULL, 2, NULL, 1); 
+  xTaskCreatePinnedToCore(taskIRSender, "IR_Sender", 4096, NULL, 2, NULL, 1);
+  xTaskCreatePinnedToCore(taskDocPZEM, "Doc_PZEM", 4096, NULL, 1, NULL, 1);
 
 }
 
@@ -324,3 +319,4 @@ void loop() {
   nutnhan();
   vTaskDelay(pdMS_TO_TICKS(10));
 }
+
